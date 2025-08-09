@@ -14,6 +14,7 @@ import (
 var (
 	ext        *g.Ext
 	target     string
+	delay      = 200 * time.Millisecond
 )
 
 func main() {
@@ -89,11 +90,11 @@ func startTrade(username string) {
 
 // handleTradeOpen handles when a trade is opened
 func handleTradeOpen(e *g.Intercept) {
-	log.Println("Trade opened! Canceling in 0.5 seconds...")
+	log.Println("Trade opened! Canceling in", delay, "seconds...")
 
 	// Start a timer to cancel the trade after 0.5 seconds
 	go func() {
-		time.Sleep(200 * time.Millisecond)
+		time.Sleep(delay)
 
 		log.Println("Canceling trade...")
 		ext.Send(out.TRADE_CLOSE)
